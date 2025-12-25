@@ -1,0 +1,128 @@
+/* AuthPage.css */
+.container {
+  perspective: 1000px;
+}
+
+.cover {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 100%;
+  width: 50%;
+  z-index: 10;
+  transition: all 1s ease;
+  transform-origin: left;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+.cover.flipped {
+  transform: rotateY(-180deg);
+}
+
+.face {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  backface-visibility: hidden;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.back {
+  transform: rotateY(180deg);
+}
+
+.cover img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.text-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(190, 24, 93, 0.4); 
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+.text-1 {
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.text-2 {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.input-box input {
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  padding-left: 40px;
+  transition: all 0.3s ease;
+}
+
+.input-box input:focus {
+  border-color: #ec4899;
+  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.2);
+}
+
+@media (max-width: 768px) {
+  .container {
+    max-width: 100% !important;
+    padding: 20px !important;
+  }
+  
+  .cover {
+    display: none;
+  }
+  
+  .form-content {
+    flex-direction: column;
+  }
+  
+  .login-form, .signup-form {
+    width: 100% !important;
+    padding: 0 !important;
+    opacity: 1 !important;
+    pointer-events: all !important;
+  }
+  
+  .signup-form {
+    display: none;
+  }
+  
+  .show-signup .login-form {
+    display: none;
+  }
+  
+  .show-signup .signup-form {
+    display: block;
+  }
+}
+
+.input-box input {
+  border: 2px solid #e5e7eb !important;
+  border-radius: 8px !important;
+  transition: all 0.3s ease !important;
+}
+
+.input-box input:focus {
+  border-color: #ec4899 !important;
+  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.2) !important;
+  outline: none !important;
+}
