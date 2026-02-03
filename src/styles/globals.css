@@ -1,0 +1,343 @@
+/* Global Styles - Simple and Clean */
+
+/* Reset and Base Styles */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  direction: ltr !important;
+  text-align: left !important;
+  background-color: #faf9f6;
+  color: #333;
+}
+
+/* Force LTR for all elements */
+* {
+  direction: ltr !important;
+}
+
+/* Utility Classes */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding: 0 2rem;
+  }
+}
+
+/* Custom Colors */
+.text-wood-primary {
+  color: #8B7355;
+}
+
+.text-wood-dark {
+  color: #A0522D;
+}
+
+.bg-wood-primary {
+  background-color: #8B7355;
+}
+
+.bg-wood-dark {
+  background-color: #A0522D;
+}
+
+.bg-wood-light {
+  background-color: #D4B996;
+}
+
+/* Button Styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: #8B7355;
+  color: white;
+  border: 1px solid #8B7355;
+}
+
+.btn-primary:hover {
+  background-color: #A0522D;
+  border-color: #A0522D;
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: #8B7355;
+  border: 1px solid #8B7355;
+}
+
+.btn-outline:hover {
+  background-color: #8B7355;
+  color: white;
+}
+
+/* Card Styles */
+.card {
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s;
+}
+
+.card:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Styles */
+.input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  font-size: 1rem;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #8B7355;
+  box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.1);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #8B7355;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #A0522D;
+}
+
+/* Swiper Coverflow Effect */
+.swiper-slide {
+  transition: all 0.5s ease;
+  opacity: 0.7;
+  transform: scale(0.85);
+}
+
+.swiper-slide-active {
+  opacity: 1;
+  transform: scale(1);
+  z-index: 10;
+}
+
+.swiper-slide-prev,
+.swiper-slide-next {
+  opacity: 0.8;
+  transform: scale(0.9);
+}
+
+/* Custom Pagination */
+.swiper-pagination-bullet-active {
+  background: #8B7355 !important;
+  width: 30px !important;
+  border-radius: 10px !important;
+}
+
+/* Navigation Buttons */
+.custom-prev:hover .chevron,
+.custom-next:hover .chevron {
+  color: #8B7355;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .swiper-slide {
+    transform: scale(0.95) !important;
+  }
+  
+  .swiper-slide-active {
+    transform: scale(1) !important;
+  }
+}
+
+/* Carousel Animation */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutLeft {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+}
+
+/* Focus effect for middle card */
+.scale-105 {
+  box-shadow: 0 20px 40px rgba(139, 115, 85, 0.15) !important;
+  border-color: #8B7355 !important;
+}
+
+/* Progress bar for auto-slide */
+.progress-bar {
+  height: 3px;
+  background: linear-gradient(90deg, #8B7355, #A0522D);
+  animation: progress 5s linear infinite;
+}
+
+@keyframes progress {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+/* Floating Add Button Effect */
+.floating-add-btn {
+  box-shadow: 
+    0 10px 25px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset,
+    0 4px 6px -1px rgba(0, 0, 0, 0.2),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+  animation: float 3s ease-in-out infinite;
+}
+
+.floating-add-btn:hover {
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.2) inset,
+    0 10px 15px -3px rgba(0, 0, 0, 0.3),
+    0 4px 6px -2px rgba(0, 0, 0, 0.15) !important;
+  transform: translateY(-2px) scale(1.1) !important;
+}
+
+.floating-add-btn:active {
+  transform: translateY(0) scale(0.95) !important;
+  box-shadow: 
+    0 5px 15px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset !important;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Card adjustments for floating button */
+.pb-6 {
+  padding-bottom: 1.5rem; /* مساحة للزر العائم */
+}
+
+.-bottom-6 {
+  bottom: -1.5rem; /* نصف الزر خارج الكرت */
+}
+
+/* Ensure button stays above other cards */
+.z-20 {
+  z-index: 20;
+}
+
+/* Middle card elevation */
+.md\:scale-105 {
+  transform: scale(1.05);
+}
+
+.md\:-translate-y-2 {
+  transform: translateY(-0.5rem);
+}
+
+
+.btnEx{
+  position: relative;
+  top: 180px;
+}
+
+.whySec h3{
+font-family: 'Inter';
+font-weight: 600;
+font-size: 74px;
+line-height: 100%;
+letter-spacing: 0%;
+color: black;
+  
+}
+.whySec p{
+  font-family: 'Inter';
+font-weight: 500;
+font-style: Medium;
+font-size: 20px;
+line-height: 100%;
+letter-spacing: 0%;
+color: #9F9C9C;
+
+}
+
+.recommend{
+  margin-bottom: -65px;
+
+}
+.recommend h3{
+      position: relative;
+      bottom: 110px;
+      left: 10px;
+      font-family: 'Inter';
+  font-weight: 600;
+  font-size: 55px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: black;
+      margin-bottom: 0px;
+}
+
+
+/* في ملف CSS منفصل */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.form-transition {
+  animation: slideIn 0.5s ease-out;
+}
