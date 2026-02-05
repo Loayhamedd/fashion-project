@@ -1,5 +1,4 @@
-// src/components/Layout/MainLayout.jsx - النسخة الصحيحة
-import { Outlet } from "react-router-dom"; // ← مهم جداً!
+import { Outlet } from "react-router-dom"; 
 import Navbar from "../Navbar";
 import Footer from "../Footer";
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { User, Mail, Phone, MapPin } from "lucide-react";
-import ContactImage from "../../assets/recommend/contact.png";
+import ContactImage from "../../assets/contact section/contact.png";
 const ContactUs = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -27,10 +27,8 @@ const ContactUs = () => {
     <section className="py-14 px-4 sm:px-6 lg:px-8 bg-white">
       <div className="max-w-5xl mx-auto">
         
-        {/* Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           
-          {/* Left Column: Contact Form */}
           <div className="order-2 lg:order-1 relative right-8 ">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-800 mb-4">
               Countact US
@@ -40,10 +38,8 @@ const ContactUs = () => {
               Fill out your data and select the required service and we will respond to you as soon as possible.
             </p>
 
-            {/* Contact Form */}
             <form onSubmit={handleSubmit} className="space-y-4">
               
-              {/* Name Field */}
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-gray-700 font-medium">
                   <User size={18} />
@@ -60,7 +56,6 @@ const ContactUs = () => {
                 />
               </div>
 
-              {/* Email Field */}
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-gray-700 font-medium">
                   <Mail size={18} />
@@ -77,7 +72,6 @@ const ContactUs = () => {
                 />
               </div>
 
-              {/* Phone Field */}
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-gray-700 font-medium">
                   <Phone size={18} />
@@ -94,7 +88,6 @@ const ContactUs = () => {
                 />
               </div>
 
-              {/* Address Field */}
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-gray-700 font-medium">
                   <MapPin size={18} />
@@ -111,7 +104,6 @@ const ContactUs = () => {
                 />
               </div>
 
-              {/* Submit Button */}
               <div className="pt-0.5">
                 <button
                   type="submit"
@@ -124,7 +116,6 @@ const ContactUs = () => {
             </form>
           </div>
 
-          {/* Right Column: Image */}
           <div className="order-1 lg:order-2">
             <div className="relative left-30">
               <img
@@ -146,7 +137,6 @@ const ContactUs = () => {
                 }}
               />
               
-              {/* Optional decorative element */}
               <div className="
                 absolute -bottom-6 -right-6 
                 w-32 h-32 

@@ -1,10 +1,9 @@
-// ProductCard.jsx - نسخة مبسطة للصفحة الحالية
 import { ShoppingCart } from "lucide-react";
 
 const ProductCard = ({ product }) => {
   return (
     <div className="bg-white rounded-lg overflow-hidden">
-      {/* Product Image */}
+
       <div className="h-56 overflow-hidden mb-4">
         <img
           src={product.image || product.images?.[0]}
@@ -13,7 +12,6 @@ const ProductCard = ({ product }) => {
         />
       </div>
 
-      {/* Product Info */}
       <div className="px-1">
         <h3 className="text-base font-semibold text-gray-800 mb-2">
           {product.name}
@@ -23,7 +21,6 @@ const ProductCard = ({ product }) => {
           {typeof product.price === 'number' ? `${product.price}$` : product.price}
         </div>
 
-        {/* Add to Cart Button */}
         <button className="w-full bg-black hover:bg-gray-800 text-white py-2 rounded-lg font-medium transition-colors flex items-center justify-center gap-2 text-sm">
           <ShoppingCart size={14} />
           Add To Chart

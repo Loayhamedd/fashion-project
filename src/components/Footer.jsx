@@ -5,10 +5,8 @@ const Footer = () => {
     <footer className="bg-[#8b7355] py-6 rounded-t-4xl">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Footer Content Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           
-          {/* Column 1: Gallery & Email */}
           <div>
             
             <h2 className="text-2xl font-bold text-white mb-4">
@@ -19,7 +17,6 @@ const Footer = () => {
             </p>
           </div>
 
-          {/* Column 2: Navigate */}
           <div>
             <h3 className="text-lg font-semibold text-white mb-4">
               Navigate
@@ -43,7 +40,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Column 3: Information */}
           <div>
             <h3 className="text-lg font-semibold text-white mb-4">
               Information
@@ -67,7 +63,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Column 4: About */}
           <div>
             <h3 className="text-lg font-semibold text-white mb-4">
               About
@@ -93,15 +88,13 @@ const Footer = () => {
 
         </div>
 
-        {/* Divider */}
         <div className="border-t border-gray-300 mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            {/* Copyright */}
+            
             <p className="text-white text-sm">
               © {new Date().getFullYear()} Gallery. All rights reserved.
             </p>
             
-            {/* Payment Methods */}
             <div className="mt-4 md:mt-0">
               <p className="text-white text-sm mb-2">
                 We accept:

@@ -1,8 +1,7 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import cartService from "./cartService";
+import { createSlice } from "@reduxjs/toolkit";
 
-const cartItemsFromStorage = localStorage.getItem('cartItems') 
-  ? JSON.parse(localStorage.getItem('cartItems')) 
+const cartItemsFromStorage = localStorage.getItem('cart') 
+  ? JSON.parse(localStorage.getItem('cart')) 
   : [];
 
 const initialState = {
@@ -17,33 +16,6 @@ const initialState = {
   message: '',
 };
 
-// Async thunks
-export const addToCart = createAsyncThunk(
-  'cart/add',
-  async ({ productId, quantity }, thunkAPI) => {
-    try {
-      return await cartService.addToCart(productId, quantity);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(
-        error.response?.data?.message || "Failed to add to cart"
-      );
-    }
-  }
-);
-
-export const removeFromCart = createAsyncThunk(
-  'cart/remove',
-  async (productId, thunkAPI) => {
-    try {
-      return await cartService.removeFromCart(productId);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(
-        error.response?.data?.message || "Failed to remove from cart"
-      );
-    }
-  }
-);
-
 const cartSlice = createSlice({
   name: "cart",
   initialState,
@@ -52,7 +24,7 @@ const cartSlice = createSlice({
       state.cartItems = [];
       state.shippingAddress = {};
       state.paymentMethod = '';
-      localStorage.removeItem('cartItems');
+      localStorage.removeItem('cart');
       localStorage.removeItem('shippingAddress');
       localStorage.removeItem('paymentMethod');
     },
@@ -64,64 +36,68 @@ const cartSlice = createSlice({
       state.paymentMethod = action.payload;
       localStorage.setItem('paymentMethod', action.payload);
     },
-    // Sync actions for local cart management
+
     addToCartSync: (state, action) => {
       const item = action.payload;
-      const existItem = state.cartItems.find(x => x.product === item.product);
+      
+
+      const existItem = state.cartItems.find(x => 
+        x.id === item.id || x.productId === item.id || x.product === item.id
+      );
       
       if (existItem) {
         state.cartItems = state.cartItems.map(x => 
-          x.product === existItem.product ? item : x
+          (x.id === item.id || x.productId === item.id || x.product === item.id) 
+            ? { ...x, quantity: x.quantity + (item.quantity || 1) }
+            : x
         );
       } else {
-        state.cartItems.push(item);
+        const cartItem = {
+          product: item.id,  
+          id: item.id,        
+          productId: item.id, 
+          name: item.name,
+          price: item.price,
+          image: item.image,
+          quantity: item.quantity || 1,
+          description: item.description || `${item.name} - ${item.type || ''}`,
+          category: item.category || 'General'
+        };
+        state.cartItems.push(cartItem);
       }
-      localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+      
+
+      localStorage.setItem('cart', JSON.stringify(state.cartItems));
     },
     removeFromCartSync: (state, action) => {
-      state.cartItems = state.cartItems.filter(x => x.product !== action.payload);
-      localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+      const productId = action.payload;
+      state.cartItems = state.cartItems.filter(x => 
+        x.id !== productId && x.product !== productId && x.productId !== productId
+      );
+      localStorage.setItem('cart', JSON.stringify(state.cartItems));
     },
-    // أضف هذا الـ action المفقود
     updateCartItemQuantity: (state, action) => {
       const { productId, quantity } = action.payload;
-      const item = state.cartItems.find(x => x.product === productId);
+      const item = state.cartItems.find(x => 
+        x.id === productId || x.product === productId || x.productId === productId
+      );
       if (item) {
-        item.quantity = Math.max(1, quantity); // Ensure quantity is at least 1
-        localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+        item.quantity = Math.max(1, quantity);
+        localStorage.setItem('cart', JSON.stringify(state.cartItems));
       }
     },
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(addToCart.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(addToCart.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.cartItems = action.payload;
-        localStorage.setItem('cartItems', JSON.stringify(action.payload));
-      })
-      .addCase(addToCart.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
-      })
-      .addCase(removeFromCart.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(removeFromCart.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.cartItems = action.payload;
-        localStorage.setItem('cartItems', JSON.stringify(action.payload));
-      })
-      .addCase(removeFromCart.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
-      });
+
+    loadCartFromStorage: (state) => {
+      const cartData = localStorage.getItem('cart');
+      if (cartData) {
+        try {
+          state.cartItems = JSON.parse(cartData);
+        } catch (error) {
+          console.error('Error parsing cart data:', error);
+          state.cartItems = [];
+        }
+      }
+    },
   },
 });
 
@@ -131,12 +107,12 @@ export const {
   savePaymentMethod,
   addToCartSync,
   removeFromCartSync,
-  updateCartItemQuantity  // تأكد من export هذا
+  updateCartItemQuantity,
+  loadCartFromStorage
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
 
-// أضف هذه الدالة المساعدة في نفس الملف (في الأسفل)
 export const calculateCartTotals = (cartItems) => {
   const itemsPrice = cartItems.reduce(
     (acc, item) => acc + (item.price * item.quantity),

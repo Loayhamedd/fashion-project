@@ -1,4 +1,3 @@
-// src/pages/Auth/ForgotPasswordPage.jsx
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaEnvelope, FaArrowLeft, FaCheckCircle } from 'react-icons/fa';
@@ -14,12 +13,10 @@ const ForgotPasswordPage = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    // محاكاة إرسال الطلب
     setTimeout(() => {
       setIsLoading(false);
       setIsSubmitted(true);
       
-      // في الواقع هنا سيتم إرسال رابط إعادة تعيين إلى البريد الإلكتروني
       console.log('Password reset link sent to:', email);
     }, 1500);
   };
@@ -78,7 +75,6 @@ const ForgotPasswordPage = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
       <div className="max-w-md w-full">
-        {/* Back Button */}
         <div className="mb-6">
           <Link
             to="/auth?mode=login"
@@ -89,9 +85,7 @@ const ForgotPasswordPage = () => {
           </Link>
         </div>
 
-        {/* Main Card */}
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-          {/* Header */}
           <div className="bg-gradient-to-r from-[#8B7355] to-[#A38B6D] p-6 text-white">
             <div className="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center mb-4 mx-auto">
               <Lock size={28} />
@@ -104,7 +98,6 @@ const ForgotPasswordPage = () => {
             </p>
           </div>
 
-          {/* Form */}
           <div className="p-8">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
@@ -150,7 +143,6 @@ const ForgotPasswordPage = () => {
               </button>
             </form>
 
-            {/* Help Text */}
             <div className="mt-8 pt-6 border-t border-gray-200">
               <div className="bg-blue-50 rounded-lg p-4 mb-4">
                 <div className="flex items-start gap-3">

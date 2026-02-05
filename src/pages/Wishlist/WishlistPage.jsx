@@ -1,4 +1,3 @@
-// src/pages/Wishlist/WishlistPage.jsx
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
@@ -13,7 +12,6 @@ const WishlistPage = () => {
   const [sortBy, setSortBy] = useState('recent');
   const [selectedItems, setSelectedItems] = useState([]);
   
-  // بيانات المفضلة (مثال)
   const [wishlistItems, setWishlistItems] = useState([
     {
       id: 1,
@@ -97,7 +95,6 @@ const WishlistPage = () => {
   
   const categories = ['All', 'Chairs', 'Sofas', 'Tables', 'Lamps'];
   
-  // فرز العناصر
   const sortedItems = [...wishlistItems].sort((a, b) => {
     switch (sortBy) {
       case 'price-low':
@@ -196,7 +193,7 @@ const WishlistPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 py-8">
-        {/* Header */}
+
         <div className="mb-8">
           <div className="flex items-center justify-between">
             <div>
@@ -216,7 +213,7 @@ const WishlistPage = () => {
           </div>
         </div>
         
-        {/* Stats Cards */}
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           <div className="bg-white rounded-xl shadow-sm p-6">
             <div className="flex items-center justify-between">
@@ -255,10 +252,10 @@ const WishlistPage = () => {
           </div>
         </div>
         
-        {/* Filters and Actions */}
+
         <div className="bg-white rounded-xl shadow-sm p-4 mb-6">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-            {/* Categories */}
+
             <div className="flex items-center gap-3 overflow-x-auto pb-2">
               <Filter size={20} className="text-gray-600 flex-shrink-0" />
               {categories.map(category => (
@@ -271,7 +268,7 @@ const WishlistPage = () => {
               ))}
             </div>
             
-            {/* Sort and Bulk Actions */}
+
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
               <div className="flex items-center gap-3">
                 <span className="text-sm text-gray-600 whitespace-nowrap">Sort by:</span>
@@ -313,7 +310,7 @@ const WishlistPage = () => {
           </div>
         </div>
         
-        {/* Wishlist Items */}
+
         {wishlistItems.length === 0 ? (
           <div className="bg-white rounded-xl shadow-sm p-12 text-center">
             <div className="w-24 h-24 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-6">
@@ -343,7 +340,7 @@ const WishlistPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {sortedItems.map((item) => (
               <div key={item.id} className="bg-white rounded-xl shadow-sm overflow-hidden group">
-                {/* Item Header */}
+
                 <div className="p-4 border-b border-gray-100">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -373,7 +370,7 @@ const WishlistPage = () => {
                   </div>
                 </div>
                 
-                {/* Item Image */}
+
                 <div className="relative h-64 overflow-hidden bg-gray-100">
                   <Link to={`/product/${item.id}`}>
                     <img
@@ -383,14 +380,14 @@ const WishlistPage = () => {
                     />
                   </Link>
                   
-                  {/* Discount Badge */}
+
                   {item.originalPrice > item.price && (
                     <div className="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">
                       Save ${(item.originalPrice - item.price).toFixed(2)}
                     </div>
                   )}
                   
-                  {/* View Button */}
+
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
                     <Link
                       to={`/product/${item.id}`}
@@ -402,7 +399,7 @@ const WishlistPage = () => {
                   </div>
                 </div>
                 
-                {/* Item Info */}
+
                 <div className="p-6">
                   <div className="mb-3">
                     <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -418,7 +415,6 @@ const WishlistPage = () => {
                     </p>
                   </div>
                   
-                  {/* Price */}
                   <div className="flex items-center gap-3 mb-4">
                     <span className="text-2xl font-bold text-gray-900">
                       ${item.price.toFixed(2)}
@@ -435,7 +431,6 @@ const WishlistPage = () => {
                     )}
                   </div>
                   
-                  {/* Color Options */}
                   <div className="flex gap-2 mb-6">
                     {item.colors.map((color, index) => (
                       <div
@@ -447,7 +442,6 @@ const WishlistPage = () => {
                     ))}
                   </div>
                   
-                  {/* Action Buttons */}
                   <div className="flex gap-3">
                     <button
                       onClick={() => handleAddToCart(item)}
@@ -472,7 +466,7 @@ const WishlistPage = () => {
           </div>
         )}
         
-        {/* Recommendations */}
+
         {wishlistItems.length > 0 && (
           <div className="mt-12">
             <div className="flex items-center justify-between mb-6">

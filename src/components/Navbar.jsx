@@ -1,12 +1,11 @@
-// src/components/Navbar.jsx
-import { Link, useLocation, useNavigate } from "react-router-dom"; // أضف useLocation هنا
+import { Link, useLocation, useNavigate } from "react-router-dom"; 
 import { ShoppingCart, User, Menu, X, Sofa, LogOut } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const location = useLocation(); // هذا يحتاج import
+  const location = useLocation(); 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -16,7 +15,7 @@ const Navbar = () => {
   const { cartItems } = useSelector((state) => state.cart);
   const cartItemsCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
-  // التحقق من حالة تسجيل الدخول
+
   useEffect(() => {
     const loggedIn = localStorage.getItem("isLoggedIn") === "true";
     const name = localStorage.getItem("userName") || "";
@@ -104,12 +103,9 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Right Side: Auth Buttons & User */}
           <div className="flex items-center space-x-1">
             {isLoggedIn ? (
-              /* User Profile - When Logged In */
               <div className="hidden lg:flex items-center space-x-3">
-                {/* User Profile Circle */}
                 <div className="relative group">
                   <button 
                     className="w-10 h-10 rounded-full bg-gray-100 border-2 border-[#D4B996] flex items-center justify-center hover:border-[#8B7355] transition-colors"
@@ -118,7 +114,7 @@ const Navbar = () => {
                     <User size={20} className="text-[#8B7355]" />
                   </button>
                   
-                  {/* Dropdown Menu */}
+
                   {isUserMenuOpen && (
                     <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
                       <div className="p-3 border-b border-gray-100">
@@ -155,7 +151,7 @@ const Navbar = () => {
                             className="w-full text-left px-3 py-2 text-red-500 hover:bg-red-50 rounded flex items-center gap-2"
                           >
                             <LogOut size={16} />
-                            Sign Out
+                            Logout
                           </button>
                         </div>
                       </div>
@@ -164,17 +160,17 @@ const Navbar = () => {
                 </div>
               </div>
             ) : (
-              /* Auth Buttons - When Not Logged In */
+
               <div className="hidden lg:flex items-center space-x-3">
                 <Link
-                  to="/auth?mode=login"
+                  to="/auth?mode=register"
                   className="px-6 py-1 border border-[#8B7355] text-[#8B7355] rounded-lg hover:bg-[#8B7355] hover:text-white transition-colors font-medium"
                   style={{ fontFamily: "'Inter', sans-serif" }}
                 >
                   Sign In
                 </Link>
                 <Link
-                  to="/auth?mode=register"
+                  to="/auth?mode=login"
                   className="px-6 py-1 bg-[#8B7355] text-white rounded-lg hover:bg-[#A0522D] transition-colors font-medium"
                   style={{ fontFamily: "'Inter', sans-serif" }}
                 >
@@ -183,7 +179,7 @@ const Navbar = () => {
               </div>
             )}
 
-            {/* Mobile Menu Button */}
+
             <button
               className="lg:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -197,7 +193,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile Menu */}
+
         {isMenuOpen && (
           <div className="lg:hidden mt-4 bg-white rounded-xl shadow-lg border border-gray-200">
             <div className="py-3">
@@ -222,10 +218,10 @@ const Navbar = () => {
                 </Link>
               ))}
 
-              {/* Mobile Auth Section */}
+
               <div className="px-4 py-3 border-t border-gray-200">
                 {isLoggedIn ? (
-                  /* Mobile User Profile - Logged In */
+
                   <div className="space-y-4">
                     <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
                       <div className="w-10 h-10 rounded-full bg-gray-100 border-2 border-[#D4B996] flex items-center justify-center">
@@ -259,7 +255,7 @@ const Navbar = () => {
                     </div>
                   </div>
                 ) : (
-                  /* Mobile Auth Buttons - Not Logged In */
+
                   <>
                     <div className="grid grid-cols-2 gap-3 mb-4">
                       <Link

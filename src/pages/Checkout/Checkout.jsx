@@ -1,4 +1,3 @@
-// src/pages/Checkout/Checkout.jsx
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -23,7 +22,7 @@ const Checkout = () => {
   });
   
   const [isProcessing, setIsProcessing] = useState(false);
-  const [activeStep, setActiveStep] = useState(1); // 1: Payment, 2: Review, 3: Complete
+  const [activeStep, setActiveStep] = useState(1);
   
   const totals = calculateCartTotals(cartItems);
   
@@ -73,12 +72,10 @@ const Checkout = () => {
     
     setIsProcessing(true);
     
-    // محاكاة معالجة الدفع
     setTimeout(() => {
       setIsProcessing(false);
       setActiveStep(3);
       
-      // إنشاء بيانات الطلب
       const orderData = {
         orderId: `ORD-${Math.random().toString(36).substr(2, 9).toUpperCase()}`,
         date: new Date().toLocaleDateString(),
@@ -88,7 +85,6 @@ const Checkout = () => {
         estimatedDelivery: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toLocaleDateString()
       };
       
-      // الانتقال إلى صفحة التأكيد بعد 2 ثانية
       setTimeout(() => {
         navigate('/order-confirmation', { state: { orderData } });
       }, 2000);
@@ -141,7 +137,7 @@ const Checkout = () => {
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-6xl mx-auto px-4">
-        {/* Header */}
+
         <div className="mb-8">
           <Link 
             to="/cart" 
@@ -153,8 +149,8 @@ const Checkout = () => {
           <h1 className="text-3xl font-bold text-gray-900">Checkout</h1>
           <p className="text-gray-600">Complete your purchase securely</p>
         </div>
-        
-        {/* Progress Steps */}
+
+
         <div className="flex items-center justify-between mb-8">
           {[
             { number: 1, label: 'Payment', icon: CreditCard },
@@ -182,7 +178,7 @@ const Checkout = () => {
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column - Payment Form */}
+
           <div className="lg:col-span-2">
             <div className="bg-white rounded-xl shadow-sm p-6">
               <div className="flex items-center gap-3 mb-6">
@@ -191,7 +187,7 @@ const Checkout = () => {
               </div>
               
               <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Card Number */}
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Card Number
@@ -211,7 +207,6 @@ const Checkout = () => {
                   </div>
                 </div>
                 
-                {/* Card Holder Name */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Card Holder Name
@@ -227,7 +222,6 @@ const Checkout = () => {
                   />
                 </div>
                 
-                {/* Expiry and CVV */}
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -265,7 +259,6 @@ const Checkout = () => {
                   </div>
                 </div>
                 
-                {/* Save Card Option */}
                 <div className="flex items-center">
                   <input
                     type="checkbox"
@@ -280,7 +273,6 @@ const Checkout = () => {
                   </label>
                 </div>
                 
-                {/* Terms and Conditions */}
                 <div className="flex items-start">
                   <input
                     type="checkbox"
@@ -299,7 +291,6 @@ const Checkout = () => {
                   </label>
                 </div>
                 
-                {/* Security Note */}
                 <div className="bg-blue-50 border border-blue-100 rounded-lg p-4">
                   <div className="flex items-start gap-3">
                     <Shield size={20} className="text-blue-600 mt-0.5 flex-shrink-0" />
@@ -312,7 +303,6 @@ const Checkout = () => {
                   </div>
                 </div>
                 
-                {/* Submit Button */}
                 <button
                   type="submit"
                   disabled={isProcessing}
@@ -334,12 +324,10 @@ const Checkout = () => {
             </div>
           </div>
           
-          {/* Right Column - Order Summary */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-xl shadow-sm p-6 sticky top-24">
               <h2 className="text-xl font-bold text-gray-900 mb-6">Order Summary</h2>
               
-              {/* Items List */}
               <div className="space-y-4 mb-6">
                 {cartItems.map((item) => (
                   <div key={item.product} className="flex items-center gap-3">
@@ -363,7 +351,6 @@ const Checkout = () => {
                 ))}
               </div>
               
-              {/* Order Totals */}
               <div className="border-t border-gray-200 pt-4 space-y-3">
                 <div className="flex justify-between">
                   <span className="text-gray-600">Subtotal</span>
@@ -388,7 +375,6 @@ const Checkout = () => {
                 </div>
               </div>
               
-              {/* Delivery Info */}
               <div className="mt-6 pt-6 border-t border-gray-200">
                 <div className="flex items-center gap-3 mb-3">
                   <Truck size={20} className="text-gray-600" />
@@ -399,7 +385,6 @@ const Checkout = () => {
                 </p>
               </div>
               
-              {/* Return Policy */}
               <div className="mt-6 pt-6 border-t border-gray-200">
                 <div className="flex items-center gap-3 mb-3">
                   <AlertCircle size={20} className="text-gray-600" />

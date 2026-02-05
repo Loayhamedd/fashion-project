@@ -1,202 +1,382 @@
-// src/pages/ProductDetail/ProductDetailPage.jsx
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { ShoppingCart, Heart, Star } from "lucide-react";
-import { useDispatch } from 'react-redux';
-import { addToCartSync } from '../../features/cart/cartSlice';
+import { addToCartSync } from "../../features/cart/cartSlice";
+import toast from "react-hot-toast";
 
 const ProductDetailPage = () => {
-  const { id } = useParams(); // استقبال الـ ID من الرابط
+  const { id } = useParams();
+  const dispatch = useDispatch();
   const [selectedColor, setSelectedColor] = useState("#8B7355");
   const [isFavorite, setIsFavorite] = useState(false);
-  const dispatch = useDispatch();
+  const [product, setProduct] = useState(null);
 
-  // بيانات المنتج الرئيسي
-  const mainProduct = {
-    id: id || 1,
-    name: "Orange Chair",
-    type: "Drop type",
-    description: "Fill out your data and select the required service and we will respond to you as soon as possible.",
-    price: 2600, // تغيير من "2600$" إلى 2600
-    rating: 4.5,
-    colors: ["#8B7355", "#2C3E50", "#BDC3C7", "#E74C3C", "#3498DB"],
-    image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80",
+  useEffect(() => {
+    const favorites = JSON.parse(
+      localStorage.getItem("newCollectionFavorites") || "[]",
+    );
+    setIsFavorite(favorites.includes(parseInt(id)));
+
+    const savedProduct = localStorage.getItem("selectedProduct");
+    if (savedProduct) {
+      const parsedProduct = JSON.parse(savedProduct);
+      if (parsedProduct.id.toString() === id) {
+        setProduct(parsedProduct);
+        return;
+      }
+    }
+
+    const defaultProduct = {
+      id: parseInt(id),
+      name: "Nordic Chair",
+      type: "Drop type",
+      description:
+        "Fill out your data and select the required service and we will respond to you as soon as possible.",
+      price: 2600,
+      rating: 4.5,
+      colors: ["#8B7355", "#2C3E50", "#BDC3C7", "#E74C3C", "#3498DB"],
+      image:
+        "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80",
+    };
+
+    setProduct(defaultProduct);
+  }, [id]);
+
+  const handleAddToCart = () => {
+    if (!product) return;
+
+    const cartItem = {
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      quantity: 1,
+      description: `${product.type} - ${product.name}`,
+      category: "Chairs",
+    };
+
+    dispatch(addToCartSync(cartItem));
+
+    toast.success(`${product.name} added to cart!`, {
+      duration: 3000,
+      position: "top-right",
+      icon: "🛒",
+      style: {
+        background: "#10B981",
+        color: "white",
+        borderRadius: "10px",
+        borderLeft: "4px solid #059669",
+      },
+    });
   };
 
-  // بيانات المنتجات المرتبطة
-  const relatedProducts = [
-    {
-      id: 1,
-      name: "Nordic Chair",
-      price: "3000$",
-      image: "https://images.unsplash.com/photo-1517705008128-361805f42e86?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
-      colors: ["#8B7355", "#2C3E50", "#BDC3C7"]
-    },
-    {
-      id: 2,
-      name: "Armchair Chair",
-      price: "2600$",
-      image: "https://images.unsplash.com/photo-1540574163026-643ea20ade25?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
-      colors: ["#8B7355", "#34495E", "#7F8C8D"]
-    },
-    {
-      id: 3,
-      name: "Reckline Chair",
-      price: "2600$",
-      image: "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
-      colors: ["#8B7355", "#16A085", "#95A5A6"]
-    },
-  ];
+  const handleToggleFavorite = () => {
+    if (!product) return;
 
-  // بيانات "You May Also Like"
+    const favorites = JSON.parse(
+      localStorage.getItem("newCollectionFavorites") || "[]",
+    );
+    const productId = product.id;
+
+    let updatedFavorites;
+    if (isFavorite) {
+      updatedFavorites = favorites.filter((id) => id !== productId);
+
+      toast.success(`"${product.name}" removed from wishlist!`, {
+        duration: 3000,
+        position: "top-right",
+        icon: "💔",
+        style: {
+          background: "#8B7355",
+          color: "white",
+          borderRadius: "10px",
+          borderLeft: "4px solid #6B5A45",
+        },
+      });
+    } else {
+      updatedFavorites = [...favorites, productId];
+
+      toast.success(`"${product.name}" added to wishlist!`, {
+        duration: 3000,
+        position: "top-right",
+        icon: "❤️",
+        style: {
+          background: "#EF4444",
+          color: "white",
+          borderRadius: "10px",
+          borderLeft: "4px solid #DC2626",
+        },
+      });
+    }
+
+    localStorage.setItem(
+      "newCollectionFavorites",
+      JSON.stringify(updatedFavorites),
+    );
+    setIsFavorite(!isFavorite);
+  };
+
+  const handleColorChange = (color) => {
+    setSelectedColor(color);
+
+    toast(`Color changed to ${getColorName(color)}`, {
+      duration: 2000,
+      position: "top-right",
+      icon: "🎨",
+      style: {
+        background: color,
+        color: "#FFFFFF",
+        borderRadius: "10px",
+      },
+    });
+  };
+
+  const getColorName = (hexColor) => {
+    const colorMap = {
+      "#8B7355": "Brown",
+      "#2C3E50": "Navy Blue",
+      "#BDC3C7": "Silver",
+      "#E74C3C": "Red",
+      "#3498DB": "Blue",
+      "#7D3C98": "Purple",
+      "#F39C12": "Orange",
+      "#27AE60": "Green",
+    };
+    return colorMap[hexColor] || "Selected Color";
+  };
+
+  if (!product) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-gray-300 border-t-black rounded-full animate-spin mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading product...</p>
+        </div>
+      </div>
+    );
+  }
+
   const alsoLikeProducts = [
     {
       id: 4,
       name: "Modern Sofa",
       price: "3200$",
-      image: "https://images.unsplash.com/photo-1540574163026-643ea20ade25?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
-      colors: ["#8B7355", "#7D3C98", "#F39C12"]
+      image:
+        "https://images.unsplash.com/photo-1540574163026-643ea20ade25?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
+      colors: ["#8B7355", "#7D3C98", "#F39C12"],
     },
     {
       id: 5,
       name: "Lounge Chair",
       price: "2800$",
-      image: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
-      colors: ["#E74C3C", "#F1C40F", "#9B59B6"]
+      image:
+        "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
+      colors: ["#E74C3C", "#F1C40F", "#9B59B6"],
     },
     {
       id: 6,
       name: "Office Chair",
       price: "2400$",
-      image: "https://images.unsplash.com/photo-1484101403633-562f891dc89a?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
-      colors: ["#8B7355", "#27AE60", "#3498DB"]
+      image:
+        "https://images.unsplash.com/photo-1484101403633-562f891dc89a?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
+      colors: ["#8B7355", "#27AE60", "#3498DB"],
     },
   ];
 
-  // معالجة إضافة إلى السلة
-  const handleAddToCart = () => {
+  const relatedProducts = [
+    {
+      id: 7,
+      name: "Wooden Table",
+      price: "1800$",
+      image:
+        "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
+      colors: ["#8B7355", "#27AE60", "#F39C12"],
+    },
+    {
+      id: 8,
+      name: "Accent Chair",
+      price: "1500$",
+      image:
+        "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
+      colors: ["#E74C3C", "#3498DB", "#F39C12"],
+    },
+    {
+      id: 9,
+      name: "Bookshelf",
+      price: "2200$",
+      image:
+        "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
+      colors: ["#2C3E50", "#8B7355", "#BDC3C7"],
+    },
+  ];
+
+  const handleAlsoLikeAddToCart = (alsoLikeProduct) => {
     const cartItem = {
-      product: mainProduct.id,
-      name: mainProduct.name,
-      price: mainProduct.price,
-      image: mainProduct.image,
+      id: alsoLikeProduct.id,
+      name: alsoLikeProduct.name,
+      price: parseInt(alsoLikeProduct.price),
+      image: alsoLikeProduct.image,
       quantity: 1,
-      description: `${mainProduct.type} - ${mainProduct.name}`
+      description: `Suggested product: ${alsoLikeProduct.name}`,
+      category: "Chairs",
     };
-    
+
     dispatch(addToCartSync(cartItem));
-    alert(`${mainProduct.name} added to cart!`);
+
+    toast.success(`${alsoLikeProduct.name} added to cart!`, {
+      duration: 3000,
+      position: "top-right",
+      icon: "✨",
+      style: {
+        background: "#8B7355",
+        color: "white",
+        borderRadius: "10px",
+        borderLeft: "4px solid #6B5A45",
+      },
+    });
+  };
+
+  const handleRelatedAddToCart = (relatedProduct) => {
+    const cartItem = {
+      id: relatedProduct.id,
+      name: relatedProduct.name,
+      price: parseInt(relatedProduct.price),
+      image: relatedProduct.image,
+      quantity: 1,
+      description: `Related product: ${relatedProduct.name}`,
+      category: "Furniture",
+    };
+
+    dispatch(addToCartSync(cartItem));
+
+    toast.success(`${relatedProduct.name} added to cart!`, {
+      duration: 3000,
+      position: "top-right",
+      icon: "📦",
+      style: {
+        background: "#2C3E50",
+        color: "white",
+        borderRadius: "10px",
+        borderLeft: "4px solid #1a2530",
+      },
+    });
   };
 
   return (
     <div className="min-h-screen bg-white">
       <div className="px-12 py-8">
-        {/* القسم الأول: تفاصيل المنتج - مقسم إلى قسمين */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-10">
-          {/* القسم الأيسر: صورة المنتج */}
-          <div className="relative pr-0">
-            <div className="h-[620px] w-[460px] overflow-hidden bg-gray-100">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-26 mb-10">
+          <div className="relative w-[460px]">
+            <div className="h-[680px] w-[460px] overflow-hidden bg-gray-100">
               <img
-                src={mainProduct.image}
-                alt={mainProduct.name}
+                src={product.image}
+                alt={product.name}
                 className="w-full h-full object-cover"
               />
             </div>
           </div>
 
-          {/* القسم الأيمن: تفاصيل المنتج */}
           <div className="space-y-4 mt-18 ml-[-250px] max-w-lg">
-            {/* النوع واسم المنتج */}
             <div>
               <span className="text-sm font-medium text-gray-500 uppercase tracking-wider">
-                {mainProduct.type}
+                {product.type}
               </span>
               <h1 className="text-4xl font-bold text-gray-900 mt-2 mb-4">
-                {mainProduct.name}
+                {product.name}
               </h1>
             </div>
 
-            {/* الوصف */}
             <p className="text-gray-600 text-lg leading-relaxed">
-              {mainProduct.description}
+              {product.description}
             </p>
 
-            {/* السعر */}
             <div className="mt-26">
               <span className="text-3xl font-bold text-gray-900 ">
-                ${mainProduct.price}
+                ${product.price}
               </span>
               <div className="flex items-center mt-2">
-                {/* نجوم التقييم */}
+
                 {[...Array(5)].map((_, index) => (
                   <Star
                     key={index}
                     size={30}
                     className={`
-                      ${index < Math.floor(mainProduct.rating)
-                        ? 'fill-yellow-400 text-yellow-400'
-                        : index < mainProduct.rating
-                        ? 'fill-yellow-400 text-yellow-400'
-                        : 'text-gray-300'
+                      ${
+                        index < Math.floor(product.rating)
+                          ? "fill-yellow-400 text-yellow-400"
+                          : index < product.rating
+                            ? "fill-yellow-400 text-yellow-400"
+                            : "text-gray-300"
                       }
                     `}
                   />
                 ))}
-                <span className="ml-2 text-gray-600">({mainProduct.rating})</span>
+                <span className="ml-2 text-gray-600">({product.rating})</span>
               </div>
             </div>
 
-            {/* دوائر الألوان */}
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-gray-800">Select Color</h3>
+              <h3 className="text-lg font-semibold text-gray-800">
+                Select Color
+              </h3>
               <div className="flex gap-3">
-                {mainProduct.colors.map((color, index) => (
+                {product.colors.map((color, index) => (
                   <button
                     key={index}
-                    onClick={() => setSelectedColor(color)}
+                    onClick={() => handleColorChange(color)}
                     className={`
                       w-12 h-12 rounded-full border-4 transition-all duration-300
-                      ${selectedColor === color 
-                        ? 'border-gray-800 scale-110' 
-                        : 'border-white hover:border-gray-300'
+                      ${
+                        selectedColor === color
+                          ? "border-gray-800 scale-110"
+                          : "border-white hover:border-gray-300"
                       }
                     `}
                     style={{ backgroundColor: color }}
-                    title={`Color option ${index + 1}`}
+                    title={`${getColorName(color)} color`}
                   />
                 ))}
               </div>
+              <div className="text-sm text-gray-600 mt-2">
+                Selected:{" "}
+                <span className="font-medium">
+                  {getColorName(selectedColor)}
+                </span>
+              </div>
             </div>
 
-            {/* زر Add To Chart وزر المفضلة */}
             <div className="flex items-center gap-14 pt-6">
-              {/* زر Add To Chart */}
-              <button 
+              
+              <button
                 onClick={handleAddToCart}
-                className="flex items-center justify-center gap-4 bg-[#FFFFFF] border-2 border-gray-300 hover:bg-gray-200 text-black px-12 py-6 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105"
+                className="flex items-center justify-center gap-4 bg-[#FFFFFF] border-2 border-gray-300 hover:bg-gray-200 text-black px-12 py-6 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 active:scale-95"
               >
                 <ShoppingCart size={26} />
                 Add To Cart
               </button>
 
-              {/* زر المفضلة */}
               <button
-                onClick={() => setIsFavorite(!isFavorite)}
+                onClick={handleToggleFavorite}
                 className={`
                   p-6 rounded-full border-2 transition-all duration-300
-                  ${isFavorite
-                    ? 'border-red-500 bg-red-50'
-                    : 'border-gray-300 hover:border-gray-400'
+                  hover:scale-105 active:scale-95
+                  ${
+                    isFavorite
+                      ? "border-red-500 bg-red-50 hover:bg-red-100"
+                      : "border-gray-300 hover:border-gray-400"
                   }
                 `}
+                title={isFavorite ? "Remove from wishlist" : "Add to wishlist"}
               >
                 <Heart
                   size={34}
                   className={`
                     transition-all duration-300
-                    ${isFavorite
-                      ? 'fill-red-500 text-red-500'
-                      : 'text-gray-600 hover:text-red-500'
+                    ${
+                      isFavorite
+                        ? "fill-red-500 text-red-500"
+                        : "text-gray-600 hover:text-red-500"
                     }
                   `}
                 />
@@ -205,81 +385,100 @@ const ProductDetailPage = () => {
           </div>
         </div>
 
-        {/* القسم الثاني: Related Products */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">Related Products</h2>
+        <div className="mb-12">
+          <h2 className="text-3xl font-bold text-gray-900 mb-8">
+            You May Also Like
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {relatedProducts.map((product) => (
-              <div key={product.id} className="group relative">
-                {/* دوائر الألوان في الأعلى على اليسار */}
+            {alsoLikeProducts.map((alsoLikeProduct) => (
+              <div key={alsoLikeProduct.id} className="group relative">
                 <div className="absolute top-4 left-4 z-10 flex gap-2">
-                  {product.colors.map((color, index) => (
+                  {alsoLikeProduct.colors.map((color, index) => (
                     <div
                       key={index}
                       className="w-6 h-6 rounded-full border-2 border-white shadow-sm"
                       style={{ backgroundColor: color }}
+                      title={`${getColorName(color)} color`}
                     />
                   ))}
                 </div>
 
-                {/* صورة المنتج */}
-                <div className="h-64 overflow-hidden rounded-2xl bg-gray-100 mb-4">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                </div>
+                <button
+                  onClick={() => handleAlsoLikeAddToCart(alsoLikeProduct)}
+                  className="absolute top-4 right-4 z-10 bg-white p-3 rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300"
+                  title={`Add ${alsoLikeProduct.name} to cart`}
+                >
+                  <ShoppingCart size={20} className="text-gray-700" />
+                </button>
 
-                {/* اسم المنتج والسعر */}
-                <div className="text-center">
-                  <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                    {product.name}
-                  </h3>
-                  <div className="text-lg font-bold text-gray-900">
-                    {product.price}
+                <Link to={`/product/${alsoLikeProduct.id}`}>
+                  <div className="h-64 overflow-hidden rounded-2xl bg-gray-100 mb-4">
+                    <img
+                      src={alsoLikeProduct.image}
+                      alt={alsoLikeProduct.name}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
                   </div>
-                </div>
+
+                  <div className="text-center">
+                    <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                      {alsoLikeProduct.name}
+                    </h3>
+                    <div className="text-lg font-bold text-gray-900">
+                      {alsoLikeProduct.price}
+                    </div>
+                  </div>
+                </Link>
               </div>
             ))}
           </div>
         </div>
 
-        {/* القسم الثالث: You May Also Like */}
         <div className="mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">You May Also Like</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-8">
+            Related Products
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {alsoLikeProducts.map((product) => (
-              <div key={product.id} className="group relative">
-                {/* دوائر الألوان في الأعلى على اليسار */}
+            {relatedProducts.map((relatedProduct) => (
+              <div key={relatedProduct.id} className="group relative">
+
                 <div className="absolute top-4 left-4 z-10 flex gap-2">
-                  {product.colors.map((color, index) => (
+                  {relatedProduct.colors.map((color, index) => (
                     <div
                       key={index}
                       className="w-6 h-6 rounded-full border-2 border-white shadow-sm"
                       style={{ backgroundColor: color }}
+                      title={`${getColorName(color)} color`}
                     />
                   ))}
                 </div>
 
-                {/* صورة المنتج */}
-                <div className="h-64 overflow-hidden rounded-2xl bg-gray-100 mb-4">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                </div>
+                <button
+                  onClick={() => handleRelatedAddToCart(relatedProduct)}
+                  className="absolute top-4 right-4 z-10 bg-white p-3 rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300"
+                  title={`Add ${relatedProduct.name} to cart`}
+                >
+                  <ShoppingCart size={20} className="text-gray-700" />
+                </button>
 
-                {/* اسم المنتج والسعر */}
-                <div className="text-center">
-                  <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                    {product.name}
-                  </h3>
-                  <div className="text-lg font-bold text-gray-900">
-                    {product.price}
+                <Link to={`/product/${relatedProduct.id}`}>
+                  <div className="h-64 overflow-hidden rounded-2xl bg-gray-100 mb-4">
+                    <img
+                      src={relatedProduct.image}
+                      alt={relatedProduct.name}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
                   </div>
-                </div>
+
+                  <div className="text-center">
+                    <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                      {relatedProduct.name}
+                    </h3>
+                    <div className="text-lg font-bold text-gray-900">
+                      {relatedProduct.price}
+                    </div>
+                  </div>
+                </Link>
               </div>
             ))}
           </div>

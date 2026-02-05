@@ -7,7 +7,6 @@ const NotFound = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white flex items-center justify-center p-4">
       <div className="max-w-2xl w-full text-center">
-        {/* Illustration */}
         <div className="relative mb-8">
           <div className="w-64 h-64 mx-auto bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center">
             <div className="text-8xl font-bold text-gray-300">404</div>
@@ -16,7 +15,6 @@ const NotFound = () => {
           <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-[#A38B6D]/10 rounded-full"></div>
         </div>
         
-        {/* Message */}
         <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
           Page Not Found
         </h1>
@@ -25,7 +23,6 @@ const NotFound = () => {
           Oops! The page you're looking for seems to have wandered off. Let's get you back on track.
         </p>
         
-        {/* Search Bar */}
         <div className="max-w-md mx-auto mb-10">
           <div className="relative">
             <input
@@ -40,7 +37,6 @@ const NotFound = () => {
           </div>
         </div>
         
-        {/* Action Buttons */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-lg mx-auto mb-12">
           <Link
             to="/"
@@ -76,7 +72,6 @@ const NotFound = () => {
           </button>
         </div>
         
-        {/* Help Section */}
         <div className="bg-gray-50 rounded-xl p-6 max-w-md mx-auto">
           <h3 className="font-medium text-gray-900 mb-3">Need help?</h3>
           <div className="flex justify-center gap-6">

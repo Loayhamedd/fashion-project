@@ -17,7 +17,6 @@ const initialState = {
   productsPerPage: 12,
 };
 
-// Async thunks
 export const getProducts = createAsyncThunk(
   'products/getAll',
   async (params, thunkAPI) => {
@@ -82,14 +81,12 @@ const productsSlice = createSlice({
     filterProducts: (state) => {
       let filtered = [...state.products];
       
-      // Filter by category
       if (state.selectedCategory) {
         filtered = filtered.filter(
           product => product.category === state.selectedCategory
         );
       }
       
-      // Filter by search query
       if (state.searchQuery) {
         filtered = filtered.filter(
           product => 

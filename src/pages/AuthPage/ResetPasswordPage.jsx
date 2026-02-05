@@ -1,4 +1,3 @@
-// src/pages/Auth/ResetPasswordPage.jsx
 import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { FaLock, FaEye, FaEyeSlash, FaCheckCircle } from 'react-icons/fa';
@@ -47,16 +46,13 @@ const ResetPasswordPage = () => {
     
     setIsLoading(true);
     
-    // محاكاة إعادة تعيين كلمة المرور
     setTimeout(() => {
       setIsLoading(false);
       setIsSuccess(true);
       
-      // في الواقع هنا سيتم إرسال كلمة المرور الجديدة إلى الخادم
       console.log('Password reset for token:', token);
       console.log('New password:', form.newPassword);
       
-      // مسح localStorage وإعادة التوجيه بعد 3 ثواني
       setTimeout(() => {
         navigate('/auth?mode=login');
       }, 3000);
@@ -69,7 +65,7 @@ const ResetPasswordPage = () => {
       ...prev,
       [name]: value
     }));
-    // مسح الخطأ عند البدء بالكتابة
+
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -124,7 +120,7 @@ const ResetPasswordPage = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
       <div className="max-w-md w-full">
-        {/* Header */}
+
         <div className="mb-8 text-center">
           <div className="w-16 h-16 mx-auto bg-gradient-to-r from-[#8B7355] to-[#A38B6D] rounded-full flex items-center justify-center mb-4">
             <Lock size={28} className="text-white" />
@@ -137,10 +133,9 @@ const ResetPasswordPage = () => {
           </p>
         </div>
 
-        {/* Form Card */}
         <div className="bg-white rounded-2xl shadow-lg p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* New Password */}
+
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 New Password
@@ -175,7 +170,6 @@ const ResetPasswordPage = () => {
               </p>
             </div>
 
-            {/* Confirm Password */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Confirm New Password
@@ -207,7 +201,6 @@ const ResetPasswordPage = () => {
               )}
             </div>
 
-            {/* Password Requirements */}
             <div className="bg-gray-50 rounded-lg p-4">
               <p className="text-sm font-medium text-gray-700 mb-2">Password Requirements:</p>
               <ul className="text-xs text-gray-600 space-y-1">
@@ -226,7 +219,6 @@ const ResetPasswordPage = () => {
               </ul>
             </div>
 
-            {/* Submit Button */}
             <button
               type="submit"
               disabled={isLoading}
@@ -250,7 +242,6 @@ const ResetPasswordPage = () => {
             </button>
           </form>
 
-          {/* Back to Login */}
           <div className="mt-6 pt-6 border-t border-gray-200">
             <p className="text-center text-gray-600">
               Remember your password?{' '}

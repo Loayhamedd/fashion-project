@@ -1,18 +1,17 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 
-// ستحتاج إلى استيراد الصورة الخاصة بك
-import WhyChooseUsImage from "../../assets/why.png";
+import WhyChooseUsImage from "../../assets/why section/why.png";
 
 const WhyChooseUs = () => {
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
       <div className="max-w-[1400px] mx-auto">
         
-        {/* Why Choose Us Section */}
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 lg:gap-24 items-center">
           
-          {/* Left Column: Text Content */}
+
           <div className="order-2 lg:order-1 pl-0 lg:pl-[135px]">
             <div className="whySec mb-[250px]">
               <h3 className="text-3xl lg:text-4xl font-bold text-gray-800 mb-8">
@@ -24,7 +23,7 @@ const WhyChooseUs = () => {
               </p>
               
               <Link 
-                to="/services" 
+                to="/products"  
                 className=" btnEx
                   inline-flex items-center gap-3 
                   bg-black hover:bg-gray-800 
@@ -45,7 +44,6 @@ const WhyChooseUs = () => {
             </div>
           </div>
 
-          {/* Right Column: Image */}
           <div className="order-1 lg:order-2 pr-0 lg:pr-[264px]">
             <div className="relative">
               <img
@@ -72,7 +70,7 @@ const WhyChooseUs = () => {
                 }}
               />
               
-              {/* Optional decorative element */}
+
               <div className="
                 absolute -bottom-6 -right-6 
                 w-32 h-32 

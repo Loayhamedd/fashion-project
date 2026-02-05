@@ -1,4 +1,3 @@
-// src/pages/Orders/OrdersPage.jsx
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
@@ -9,7 +8,6 @@ import {
 const OrdersPage = () => {
   const [filter, setFilter] = useState('all');
   
-  // بيانات الطلبات (مثال)
   const orders = [
     {
       id: 'ORD-789456',
@@ -105,13 +103,12 @@ const OrdersPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 py-8">
-        {/* Header */}
+
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">My Orders</h1>
           <p className="text-gray-600">View and manage all your orders</p>
         </div>
         
-        {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
           {[
             { label: 'Total Orders', value: orderStats.total, color: 'bg-blue-500' },
@@ -133,7 +130,6 @@ const OrdersPage = () => {
           ))}
         </div>
         
-        {/* Filters */}
         <div className="bg-white rounded-xl shadow-sm p-4 mb-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center gap-3">
@@ -163,7 +159,6 @@ const OrdersPage = () => {
           </div>
         </div>
         
-        {/* Orders List */}
         <div className="space-y-6">
           {filteredOrders.length === 0 ? (
             <div className="bg-white rounded-xl shadow-sm p-8 text-center">
@@ -182,7 +177,6 @@ const OrdersPage = () => {
           ) : (
             filteredOrders.map((order) => (
               <div key={order.id} className="bg-white rounded-xl shadow-sm overflow-hidden">
-                {/* Order Header */}
                 <div className="p-6 border-b border-gray-200">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div>
@@ -207,7 +201,6 @@ const OrdersPage = () => {
                   </div>
                 </div>
                 
-                {/* Order Items */}
                 <div className="p-6">
                   <h4 className="font-medium text-gray-900 mb-4">Items in this order</h4>
                   <div className="space-y-4">
@@ -234,7 +227,7 @@ const OrdersPage = () => {
                   </div>
                 </div>
                 
-                {/* Order Footer */}
+
                 <div className="bg-gray-50 px-6 py-4">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div className="space-y-2">
@@ -276,7 +269,6 @@ const OrdersPage = () => {
           )}
         </div>
         
-        {/* Help Section */}
         <div className="mt-8 bg-white rounded-xl shadow-sm p-6">
           <h3 className="text-lg font-bold text-gray-900 mb-4">Need help with your orders?</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
