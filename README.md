@@ -1,36 +1,53 @@
-## التقنيات المستخدمة
-- **React**: لبناء واجهات المستخدم التفاعلية.  
-- **Vite**: لإنشاء المشروع بسرعة  .  
-- **Tailwind CSS**: لتصميم واجهات حديثة وسهلة التعديل.  
-- **Redux Toolkit**: لإدارة حالة المستخدم بشكل مركزي.  
-- **Axios**: للتواصل مع API أو السيرفر الفعلي.  
-- **React Router Dom**: للتنقل بين صفحات المشروع.  
-- **React Icons**: لإضافة أيقونات واضحة وسهلة الاستخدام.
+# 🛋️ Furniture Store - متجر الأثاث الرقمي
 
----
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Redux](https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E)
+![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)
 
-## صفحات المشروع
-1. **Home**: الصفحة الرئيسية للموقع.  
-2. **AuthPage**: صفحة تسجيل الدخول و إنشاء حساب، مع Flip animation سلس بين الأقسام وصور جانبية جذابة مع نصوص متحركة.  
-3. **Profile**: صفحة عرض معلومات المستخدم بعد تسجيل الدخول.  
-4. **404 Error Page**: صفحة مخصصة لأي مسار خاطئ.
+## ✨ نظرة عامة
+موقع إلكتروني متكامل لمتجر أثاث مع جميع ميزات التجارة الإلكترونية الحديثة.    بتصميم أنيق ومتجاوب.
 
----
+## 🚀 الميزات الرئيسية
+- ✅ **كتالوج منتجات متكامل** مع فلترة حسب الفئة والسعر
+- ✅ **سلة تسوق تفاعلية** مع إدارة الحالة بواسطة Redux
+- ✅ **نظام مصادقة المستخدمين** (تسجيل دخول/تسجيل جديد)
+- ✅ **قائمة الرغبات** مع حفظ محلي في localStorage
+- ✅ **صفحات تفاصيل المنتج** المتكاملة مع معرض الصور
+- ✅ **تصميم متجاوب** يعمل على جميع الأجهزة
+- ✅ **أنيميشنات سلسة** باستخدام Framer Motion
+- ✅ **إشعارات تفاعلية** مع React Hot Toast
 
+## 🛠️ التقنيات المستخدمة
+| التقنية | الوصف |
+|---------|-------|
+| **React.js** | مكتبة واجهة المستخدم الرئيسية |
+| **Vite** | أداة البناء السريع |
+| **Tailwind CSS** | إطار عمل CSS للتصميم |
+| **Redux Toolkit** | إدارة حالة التطبيق |
+| **React Router v6** | إدارة المسارات والتنقل |
+| **Framer Motion** | مكتبة الأنيميشن والتأثيرات |
+| **React Hot Toast** | إشعارات المستخدم |
+| **Lucide React** | مجموعة الأيقونات |
 
-# React + Vite
+## 📦 تثبيت وتشغيل المشروع
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### المتطلبات الأساسية
+- Node.js (الإصدار 16 أو أعلى)
+- npm أو yarn
+- Git
 
-Currently, two official plugins are available:
+### خطوات التشغيل
+```bash
+# 1. استنساخ المشروع من GitHub
+git clone https://github.com/Loayhamedd/fashion-project.git
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# 2. الدخول إلى مجلد المشروع
+cd fashion-project
 
-## React Compiler
+# 3. تثبيت جميع المكتبات المطلوبة
+npm install
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# 4. تشغيل المشروع في وضع التطوير
+npm run dev
